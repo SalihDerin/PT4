@@ -16,15 +16,8 @@ public class Vehicle extends JLabel {
    private Complex s;
   
    public Vehicle() {
-      this.mass = 0.0;
-      this.fMax = 0.0;
-      this.fAkt = null;
-      this.a = null;
-      this.v = null;
-      this.s = null;
+      this.urzustand();
       setIcon(new ImageIcon(Vehicle.class.getResource("/auto_png_256_256.png")));
-      setBounds(0, 0, 100, 100);
-      setVisible(true);
    }
 
    /**Konstruktor Vehicle.
@@ -43,53 +36,75 @@ public class Vehicle extends JLabel {
       this.v = v;
       this.s = s;
       setIcon(new ImageIcon(Vehicle.class.getResource("/auto_png_256_256.png")));
-      setBounds(0, 0, 100, 100);
+      setBounds((int) this.s.re(), (int) this.s.im(), 256, 256);
       setVisible(true);
    }
 	
    /**Das Fahrzeug rollt.*/  
    public void roll() {
-      ;
+      // F_r=m*g*c_r
+      this.fAkt.setReal(this.mass*9.81*0.015);
+      this.a.setReal(this.fAkt.re()/this.mass*(-1));
+      if (this.v.re() < 0) this.a.setReal(this.a.re()*(-1));;
    }
 
    /**Das Fahrzeug beschleunigt in x-Richtung positiv.*/
    public void accel() {
-      ;
+      this.a.setImag(0.0);
+      this.fAkt.setReal(this.fMax);
+      this.a.setReal(this.fAkt.re()/this.mass);
    }
 
-   /**Das Fahrzeug beschleugnigt in x-Richtung negativ.*/
+   /**Das Fahrzeug beschleunigt in x-Richtung negativ.*/
    public void decel() {
-      ;
+      this.a.setImag(0.0);
+      this.fAkt.setReal(this.fMax*(-1));
+      this.a.setReal(this.fAkt.re()/this.mass);
    }
 
    /**Das Fahrzeug beschleunigt in y-Richtung negativ.*/
    public void up() {
-      ;
+      this.roll();
+      this.a.setImag(0.25);
    }
 
    /**Das Fahrzeug beschleunigt in y-Richtung positiv.*/
    public void down() {
-      ;
+      this.roll();
+      this.a.setImag(-0.25);
    }
 
-   /**Aktualisiert den Zustand des Fahrzeugs. Der neue Zustand, den das Fahrzeugs im nächsten Zeitschritt einnimmt,hängt von der aktuellen Kraft ab.*/
+   /**Aktualisiert den Zustand des Fahrzeugs. Der neue Zustand, den das Fahrzeugs im nächsten Zeitschritt einnimmt, hängt von der aktuellen Kraft ab.*/
    public void simu() {
-      ;
+      // a=v/t; v=s/t
+      this.v.setReal(this.a.re()*this.dt);
+      this.s.setReal(this.v.re()*this.dt);
+      // physikalisch inakkurat, aber...joa :P
+      if (Math.abs(this.a.im()) == 0.25) this.s.setImag(this.v.re()*this.dt*this.a.im());
+      setBounds((int) this.s.re(), (int) this.s.im(), 256, 256);
+      this.a = new Complex(0.0, 0.0);
    }
 
    /**Setzt das Fahrzeug in den Urzustand zurück. Also alle Kräfte auf Null und Startposition.*/
    public void urzustand() {
-      ;
+      this.mass = 1500;
+      this.fMax = 4170;
+      this.fAkt = new Complex(0, 0);
+      this.a = new Complex(0, 0);
+      this.v = new Complex(0, 0);
+      this.s = new Complex(0, 256);
+      setBounds((int) this.s.re(), (int) this.s.im(), 256, 256);
+      setVisible(true);
    }
 
    /**Gibt die x-Position des Vehicles zurück.*/
    public double getXPos() {
-      return 0.0;
+      return this.s.re();
    }
 
    /**Gibt die y-Position des Vehicles zurück.*/
    public double getYPos() {
-      return 0.0;
+      return this.s.im();
    }
 
 }
