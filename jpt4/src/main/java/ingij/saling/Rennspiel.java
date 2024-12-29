@@ -18,15 +18,31 @@ public class Rennspiel extends JFrame {
         spielfeld.setVisible(true);
         spielfeld.repaint();
         
-
-
-
         // try {
-        //     Thread.sleep(1500);
+        //     Thread.sleep(2000);
         // } catch (Exception e) {
-        //     System.out.println("Dood, da isch a Fehler bassiet.");
+        //     System.out.println("Doooood! A Fehla!");
         // }
-        // auto.setBounds(900, 900, 50, 50);
+        // for (int i=0; i<10000; i++) {
+        //     auto.accel();
+        //     auto.simu();
+        //     spielfeld.repaint();
+        //     try {
+        //         Thread.sleep(20);
+        //     } catch (Exception e) {
+        //         System.out.println("Doooood! A Fehla!");
+        //     }
+        // }
+        // while (true) {
+        //     auto.roll();
+        //     auto.simu();
+        //     spielfeld.repaint();
+        //     try {
+        //         Thread.sleep(20);
+        //     } catch (Exception e) {
+        //         System.out.println("Doooood! A Fehla!");
+        //     }
+        // }
     }
 
 }

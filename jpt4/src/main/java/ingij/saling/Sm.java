@@ -30,7 +30,7 @@ public class Sm {
    * @return den aktuellen State als String.
    * */
   public String getStateStr() {
-    return "";
+    return "Aktueller Zustand: " + state.toString() + "\nAktuelle Fahrzeugposition: (" + this.vehicle.getXPos() + "|" + this.vehicle.getYPos() + ")";
   }
 
 }

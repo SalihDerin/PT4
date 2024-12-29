@@ -9,8 +9,7 @@ public class VehicleTest {
     private Complex start_position = this.get_current_position();
 
     @Test
-    public void test_car_movement() {
-        
+    public void test_car_movement() {        
         // Für accel() prüfen
         this.auto.accel();
         this.auto.simu();
@@ -56,23 +55,29 @@ public class VehicleTest {
 
     @Test
     public void stops_at_zero_without_active_force() {
-        for (int i=0; i<6; i++) {
+        for (int i=0; i<1000; i++) {
             this.auto.accel();
             this.auto.simu();
         }
         assertNotEquals(this.start_position.re(), this.get_current_position().re());
-        while (this.get_current_position().re() != this.start_position.re()) {
+        boolean is_moving = true;
+        while (is_moving) {
+            double x_position_before_simu = this.get_current_position().re();
             this.auto.roll();
+            this.auto.simu();
+            if (x_position_before_simu == this.get_current_position().re()) {
+                is_moving = false;
+                assertEquals(x_position_before_simu, this.get_current_position().re());
+            }
         }
-        assertEquals(this.start_position.re(), this.get_current_position().re());
+        double x_position_before_simu = this.get_current_position().re();
         this.auto.roll();
-        assertEquals(this.start_position.re(), this.get_current_position().re());
+        this.auto.simu();
+        assertEquals(x_position_before_simu, this.get_current_position().re());
     }
     
     @Test
     public void does_reset_correctly() {
-
-        // auto laufen lassen -> urzustand() aufrufen -> Position prüfen -> 1 "Frame" laufen lassen -> Position muss Anfangswert haben
         // Für accel() prüfen
         this.auto.accel();
         this.auto.simu();

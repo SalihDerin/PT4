@@ -45,7 +45,11 @@ public class Vehicle extends JLabel {
       // F_r=m*g*c_r
       this.fAkt.setReal(this.mass*9.81*0.015);
       this.a.setReal(this.fAkt.re()/this.mass*(-1));
-      if (this.v.re() < 0) this.a.setReal(this.a.re()*(-1));;
+      if (this.v.re() < 0) this.a.setReal(this.a.re()*(-1));
+      if (this.v.re() == 0.0 || (this.v.re() * (this.v.re() + this.a.re() * Vehicle.dt)) < 0) {
+         this.a.setReal(0.0);
+         this.v.setReal(0.0);
+      }
    }
 
    /**Das Fahrzeug beschleunigt in x-Richtung positiv.*/
@@ -77,10 +81,12 @@ public class Vehicle extends JLabel {
    /**Aktualisiert den Zustand des Fahrzeugs. Der neue Zustand, den das Fahrzeugs im nächsten Zeitschritt einnimmt, hängt von der aktuellen Kraft ab.*/
    public void simu() {
       // a=v/t; v=s/t
-      this.v.setReal(this.a.re()*this.dt);
-      this.s.setReal(this.v.re()*this.dt);
-      // physikalisch inakkurat, aber...joa :P
-      if (Math.abs(this.a.im()) == 0.25) this.s.setImag(this.v.re()*this.dt*this.a.im());
+      this.v.setReal(this.v.re() + this.a.re() * Vehicle.dt);
+      this.s.setReal(this.s.re() + this.v.re() * Vehicle.dt);
+      
+      // physikalisch inakkurat, aber...joa :P      
+      if (Math.abs(this.a.im()) == 0.25) this.s.setImag(this.s.im() + this.v.re() * Vehicle.dt * this.a.im());
+      
       setBounds((int) this.s.re(), (int) this.s.im(), 256, 256);
       this.a = new Complex(0.0, 0.0);
    }
