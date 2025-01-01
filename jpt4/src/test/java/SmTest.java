@@ -16,24 +16,25 @@ public class SmTest {
     public void test_inputs() {
 
         // !!! TODO: Die Methoden ausbauen und die Testfälle refactoren !!!
+        //      -> up und down sind wahrscheinlich neutral state am besten
 
         // 'a'
         String state_prior = this.sm.getStateStr();
         this.sm.statemach('a');
         String state_after = this.sm.getStateStr();
         assertNotEquals(state_prior, state_after);
-        assertEquals("acc", state_after.substring(state_after.indexOf(":") + 2, state_after.indexOf("\n") - 1));
-        assertNotEquals(state_prior.substring(state_prior.indexOf("(") + 1, state_prior.indexOf("|") - 1), state_after.substring(state_after.indexOf("(") + 1, state_after.indexOf("|") - 1));
-        assertEquals(state_prior.substring(state_prior.indexOf("|") + 1, state_prior.indexOf(")") - 1), state_after.substring(state_after.indexOf("|") + 1, state_after.indexOf(")") - 1));
+        assertEquals("acc", this.extract_actual_state(state_after));
+        assertNotEquals(this.extract_x_position(state_prior), this.extract_x_position(state_after));
+        assertEquals(this.extract_y_position(state_prior), this.extract_y_position(state_after));
 
         // 'r'
         state_prior = state_after;
         this.sm.statemach('r');
         state_after = this.sm.getStateStr();
         assertNotEquals(state_prior, state_after);
-        assertEquals("dec", state_after.substring(state_after.indexOf(":") + 2, state_after.indexOf("\n") - 1));
-        assertNotEquals(state_prior.substring(state_prior.indexOf("(") + 1, state_prior.indexOf("|") - 1), state_after.substring(state_after.indexOf("(") + 1, state_after.indexOf("|") - 1));
-        assertEquals(state_prior.substring(state_prior.indexOf("|") + 1, state_prior.indexOf(")") - 1), state_after.substring(state_after.indexOf("|") + 1, state_after.indexOf(")") - 1));
+        assertEquals("dec", this.extract_actual_state(state_after));
+        assertNotEquals(this.extract_x_position(state_prior), this.extract_x_position(state_after));
+        assertEquals(this.extract_y_position(state_prior), this.extract_y_position(state_after));
 
 
         // 'u'
@@ -45,20 +46,24 @@ public class SmTest {
 
 
         // 'n'
-
-
-
+        state_prior = state_after;
+        this.sm.statemach('r');
+        state_after = this.sm.getStateStr();
+        assertNotEquals(state_prior, state_after);
+        assertEquals("neut", this.extract_actual_state(state_after));
+        assertNotEquals(this.extract_x_position(state_prior), this.extract_x_position(state_after));
+        assertEquals(this.extract_y_position(state_prior), this.extract_y_position(state_after));
     }
 
     private int extract_x_position(String state_string) {
-        return 0;
+        return Integer.parseInt(state_string.substring(state_string.indexOf("(") + 1, state_string.indexOf("|") - 1));
     }
 
     private int extract_y_position(String state_string) {
-        return 0;
+        return Integer.parseInt(state_string.substring(state_string.indexOf("|") + 1, state_string.indexOf(")") - 1));
     }
 
     private String extract_actual_state(String state_string) {
-        return "";
+        return state_string.substring(state_string.indexOf(":") + 2, state_string.indexOf("\n") - 1);
     }
 }
