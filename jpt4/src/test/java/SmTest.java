@@ -22,36 +22,77 @@ public class SmTest {
         String state_prior = this.sm.getStateStr();
         this.sm.statemach('a');
         String state_after = this.sm.getStateStr();
+        // Zustandsstring muss sich verändert haben
         assertNotEquals(state_prior, state_after);
+        // Zustand muss passen
         assertEquals("acc", this.extract_actual_state(state_after));
+        // x-Position muss sich geändert haben
         assertNotEquals(this.extract_x_position(state_prior), this.extract_x_position(state_after));
+        // x-Position muss größer als die vorherige sein
+        assertTrue(this.extract_x_position(state_prior) < this.extract_x_position(state_after));
+        // y-Position darf sich nicht verändert haben
         assertEquals(this.extract_y_position(state_prior), this.extract_y_position(state_after));
+
+        // 'u'
+        state_prior = state_after;
+        this.sm.statemach('n');
+        state_after = this.sm.getStateStr();
+        // Zustandsstring muss sich verändert haben
+        assertNotEquals(state_prior, state_after);
+        // Zustand muss passen
+        assertEquals("neut", this.extract_actual_state(state_after));
+        // x-Position muss sich geändert haben
+        assertNotEquals(this.extract_x_position(state_prior), this.extract_x_position(state_after));
+        // x-Position muss größer als die vorherige sein
+        assertTrue(this.extract_x_position(state_prior) < this.extract_x_position(state_after));
+        // y-Position muss sich geändert haben
+        assertNotEquals(this.extract_y_position(state_prior), this.extract_y_position(state_after));
+        // y-Position muss kleiner als vorher sein
+        assertTrue(this.extract_y_position(state_prior) > this.extract_y_position(state_after));
 
         // 'r'
         state_prior = state_after;
         this.sm.statemach('r');
         state_after = this.sm.getStateStr();
+        // Zustandsstring muss sich verändert haben
         assertNotEquals(state_prior, state_after);
+        // Zustand muss passen
         assertEquals("dec", this.extract_actual_state(state_after));
+        // x-Position muss sich geändert haben
         assertNotEquals(this.extract_x_position(state_prior), this.extract_x_position(state_after));
+        // x-Position muss kleiner als die vorherige sein
+        // y-Position darf sich nicht verändert haben
         assertEquals(this.extract_y_position(state_prior), this.extract_y_position(state_after));
 
-
-        // 'u'
-
-
-
         // 'd'
-
+        state_prior = state_after;
+        this.sm.statemach('n');
+        state_after = this.sm.getStateStr();
+        // Zustandsstring muss sich verändert haben
+        assertNotEquals(state_prior, state_after);
+        // Zustand muss passen
+        assertEquals("neut", this.extract_actual_state(state_after));
+        // x-Position muss sich geändert haben
+        assertNotEquals(this.extract_x_position(state_prior), this.extract_x_position(state_after));
+        // x-Position muss ein positive Differenz zur vorherigen Position haben
+        assertTrue(this.extract_x_position(state_prior) < this.extract_x_position(state_after));
+        // y-Position muss sich geändert haben
+        assertNotEquals(this.extract_y_position(state_prior), this.extract_y_position(state_after));
+        // y-Position muss kleiner als vorher sein
+        assertTrue(this.extract_y_position(state_prior) < this.extract_y_position(state_after));
 
 
         // 'n'
         state_prior = state_after;
-        this.sm.statemach('r');
+        this.sm.statemach('n');
         state_after = this.sm.getStateStr();
+        // Zustandsstring muss sich verändert haben
         assertNotEquals(state_prior, state_after);
+        // Zustand muss passen
         assertEquals("neut", this.extract_actual_state(state_after));
+        // x-Position muss sich geändert haben
         assertNotEquals(this.extract_x_position(state_prior), this.extract_x_position(state_after));
+        // y-Position darf sich nicht verändert haben
         assertEquals(this.extract_y_position(state_prior), this.extract_y_position(state_after));
     }
 

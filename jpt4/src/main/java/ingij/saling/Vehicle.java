@@ -69,13 +69,13 @@ public class Vehicle extends JLabel {
    /**Das Fahrzeug beschleunigt in y-Richtung negativ.*/
    public void up() {
       this.roll();
-      this.a.setImag(0.25);
+      this.a.setImag(-0.25);
    }
 
    /**Das Fahrzeug beschleunigt in y-Richtung positiv.*/
    public void down() {
       this.roll();
-      this.a.setImag(-0.25);
+      this.a.setImag(0.25);
    }
 
    /**Aktualisiert den Zustand des Fahrzeugs. Der neue Zustand, den das Fahrzeugs im nächsten Zeitschritt einnimmt, hängt von der aktuellen Kraft ab.*/
