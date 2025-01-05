@@ -85,7 +85,11 @@ public class Vehicle extends JLabel {
       this.s.setReal(this.s.re() + this.v.re() * Vehicle.dt);
       
       // physikalisch inakkurat, aber...joa :P      
-      if (Math.abs(this.a.im()) == 0.25) this.s.setImag(this.s.im() + this.v.re() * Vehicle.dt * this.a.im());
+      if (Math.abs(this.a.im()) == 0.25 && this.v.re() > 0) {
+         this.s.setImag(this.s.im() + this.v.re() * Vehicle.dt * this.a.im());
+      } else if (Math.abs(this.a.im()) == 0.25 && this.v.re() < 0) {
+         this.s.setImag(this.s.im() + this.v.re() * Vehicle.dt * this.a.im() * (-1.0));
+      }
       
       setBounds((int) this.s.re(), (int) this.s.im(), 256, 256);
       this.a = new Complex(0.0, 0.0);
