@@ -22,7 +22,33 @@ public class Sm {
    * @param input die Eingabe des Spielers als char. 
    * */
   public void statemach(char input) {
-    ;
+    switch (input) {
+      case 'a':
+        this.state = vehState.acc;
+        this.vehicle.accel();
+        this.vehicle.simu();
+        break;
+      case 'r':
+        this.state = vehState.dec;
+        this.vehicle.decel();
+        this.vehicle.simu();
+        break;
+      case 'u':
+        this.state = vehState.neut;
+        this.vehicle.up();
+        this.vehicle.simu();
+        break;
+      case 'd':
+        this.state = vehState.neut;
+        this.vehicle.down();
+        this.vehicle.simu();
+        break;
+      case 'n':
+        this.state = vehState.neut;
+        this.vehicle.roll();
+        this.vehicle.simu();
+        break;
+    }
   }	
  
   /**Der aktuelle State der Statemachine 
