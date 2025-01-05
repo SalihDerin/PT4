@@ -26,27 +26,22 @@ public class Sm {
       case 'a':
         this.state = vehState.acc;
         this.vehicle.accel();
-        this.vehicle.simu();
         break;
       case 'r':
         this.state = vehState.dec;
         this.vehicle.decel();
-        this.vehicle.simu();
         break;
       case 'u':
         this.state = vehState.neut;
         this.vehicle.up();
-        this.vehicle.simu();
         break;
       case 'd':
         this.state = vehState.neut;
         this.vehicle.down();
-        this.vehicle.simu();
         break;
       case 'n':
         this.state = vehState.neut;
         this.vehicle.roll();
-        this.vehicle.simu();
         break;
     }
   }	
@@ -56,7 +51,7 @@ public class Sm {
    * @return den aktuellen State als String.
    * */
   public String getStateStr() {
-    return "Aktueller Zustand: " + state.toString() + "\nAktuelle Fahrzeugposition: (" + this.vehicle.getXPos() + "|" + this.vehicle.getYPos() + ")";
+    return "Aktueller Zustand: " + state.toString() + "\n";
   }
 
 }
